@@ -59,7 +59,7 @@ public class Norm {
                     lastOne = tokens.get((tokens.size() - 1));
                     lastOne += line;
                     tokens.set(tokens.size() - 1, lastOne);
-                    System.out.println("this is the last one " + lastOne);
+//                    System.out.println("this is the last one " + lastOne);
                 } else {
                     tokens.add(line);
                 }
@@ -79,7 +79,8 @@ public class Norm {
                         bufferedWriter.flush();
                     }
                     else if (sen.contains(";")) {
-                        System.out.println("this sen is " + sen);
+//                        sen.replaceAll("\n"," ");
+//                        System.out.println("this sen is " + sen);
                     } else {
                         bufferedWriter.write(sen.trim() + ".");
                         bufferedWriter.newLine();
