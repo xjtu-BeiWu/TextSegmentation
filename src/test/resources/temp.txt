@@ -1,0 +1,15 @@
+We say that an internal node is a 2-node if it has one data element and two children.
+We say that an internal node is a 3-node if it has two data elements and three children.
+We say that T is a 2–3 tree if and only if one of the following statements hold:
+T is empty.
+In other words, T does not have any nodes.
+T is a 2-node with data element a.
+If T has left child L and right child R, then.
+L and R are non-empty 2–3 trees of the same height;
+a is greater than each element in L; and
+a is less than or equal to each data element in R.
+T is a 3-node with data elements a and b, where a < b.
+If T has left child L, middle child M, and right child R, then.
+L, M, and R are non-empty 2–3 trees of equal height;
+a is greater than each data element in L and less than or equal to each data element in M; and
+b is greater than each data element in M and less than or equal to each data element in R.
