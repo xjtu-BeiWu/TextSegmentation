@@ -1,4 +1,4 @@
-package WordToVec;
+package word2vec;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -113,8 +113,14 @@ public class WordToVec {
         File fileCatalog = new File(inputCatalog);
         File[] files = fileCatalog.listFiles();
         String filename = "";
+        String filenames = "";
+        String filenamess = "";
         String inputFilepath = "";
         String outputFilepath = "";
+        String inputFilepaths = "";
+        String outputFilepaths = "";
+        String inputFilepathss = "";
+        String outputFilepathss = "";
 
         // 将词向量模型中存在的词读取到list中
         ArrayList<String> string1 = new ArrayList<String>();
@@ -133,41 +139,101 @@ public class WordToVec {
 
         // 匹配生成词向量
         long start1 = System.currentTimeMillis();
-        for (int i = 0; i < files.length; i++) {
-            filename = files[i].getName(); //读取待处理的文件名
-            inputFilepath = inputCatalog + "\\" + filename;
-            outputFilepath = outputCatalog + "\\" + filename;
-            FileWriter outfile = new FileWriter(outputFilepath);
-            try {
-                if (file.isFile() && file.exists()) {
-                    // 判断文件是否存在，读取文件内容到Buffer中
-                    InputStreamReader read2 = new InputStreamReader(new FileInputStream(inputFilepath), encoding);
-                    BufferedReader bufferedReader2 = new BufferedReader(read2);
-                    String lineTxt2 = null;
-                    while ((lineTxt2 = bufferedReader2.readLine()) != null) {
-                        String[] split2 = lineTxt2.split(" "); // 读取每一个单词
-                        // 对每一个单词到词向量模型中生成对应的词向量，需要再次遍历模型
-                        for (String string : split2) {
-                            int index = string1.indexOf(string); // 找到该单词在词向量模型中的下标
-                            if(index != -1){
-                                String lineVec = word2vecAll.get(index);
-                                outfile.write(lineVec + "\n");
-                            }
-                        }
-
-                    }
-                    outfile.close();//注意关闭，否则会有问题
-                    // System.out.println(string1.size());
-                    read1.close();
-                    read2.close();
-                } else {
-                    System.out.println("找不到指定文件");
+        for (int i = 0; i<files.length; i++) {
+            File of = new File(outputCatalog);
+            if (!of.exists()){
+                of.mkdir();
+            }
+            filenames = files[i].getName();
+            inputFilepaths = inputCatalog + "\\" + filenames;
+            outputFilepaths = outputCatalog + "\\" + filenames;
+            File oof = new File(outputFilepaths);
+            if(!oof.exists()){
+                oof.mkdir();
+            }
+            File fs = new File(inputFilepaths);
+            File[] fis = fs.listFiles();
+            for (int j = 0; j<fis.length; j++) {
+                filenamess = fis[j].getName();
+                inputFilepathss = inputFilepaths + "\\" + filenamess;
+                outputFilepathss = outputFilepaths + "\\" + filenamess;
+                File ooof = new File(outputFilepathss);
+                if(!ooof.exists()){
+                    ooof.mkdir();
                 }
-            } catch (Exception e) {
-                System.out.println("读取文件出错");
-                e.printStackTrace();
+                File fss = new File(inputFilepathss);
+                File[] fiss = fss.listFiles();
+                for (int k = 0; k < fiss.length; k++){
+                    filename = fiss[k].getName();
+                    inputFilepath = inputFilepathss + "\\" + filename;
+                    outputFilepath = outputFilepathss + "\\" + filename;
+                    FileWriter outfile = new FileWriter(outputFilepath);
+                    try {
+                        if (file.isFile() && file.exists()) {
+                            // 判断文件是否存在，读取文件内容到Buffer中
+                            InputStreamReader read2 = new InputStreamReader(new FileInputStream(inputFilepath), encoding);
+                            BufferedReader bufferedReader2 = new BufferedReader(read2);
+                            String lineTxt2 = null;
+                            while ((lineTxt2 = bufferedReader2.readLine()) != null) {
+                                String[] split2 = lineTxt2.split(" "); // 读取每一个单词
+                                // 对每一个单词到词向量模型中生成对应的词向量，需要再次遍历模型
+                                for (String string : split2) {
+                                    int index = string1.indexOf(string); // 找到该单词在词向量模型中的下标
+                                    if(index != -1){
+                                        String lineVec = word2vecAll.get(index);
+                                        outfile.write(lineVec + "\n");
+                                    }
+                                }
+                            }
+                            outfile.close();//注意关闭，否则会有问题
+                            // System.out.println(string1.size());
+                            read1.close();
+                            read2.close();
+                        } else {
+                            System.out.println("找不到指定文件");
+                        }
+                    } catch (Exception e) {
+                        System.out.println("读取文件出错");
+                        e.printStackTrace();
+                    }
+                }
             }
         }
+//        for (int i = 0; i < files.length; i++) {
+//            filename = files[i].getName(); //读取待处理的文件名
+//            inputFilepath = inputCatalog + "\\" + filename;
+//            outputFilepath = outputCatalog + "\\" + filename;
+//            FileWriter outfile = new FileWriter(outputFilepath);
+//            try {
+//                if (file.isFile() && file.exists()) {
+//                    // 判断文件是否存在，读取文件内容到Buffer中
+//                    InputStreamReader read2 = new InputStreamReader(new FileInputStream(inputFilepath), encoding);
+//                    BufferedReader bufferedReader2 = new BufferedReader(read2);
+//                    String lineTxt2 = null;
+//                    while ((lineTxt2 = bufferedReader2.readLine()) != null) {
+//                        String[] split2 = lineTxt2.split(" "); // 读取每一个单词
+//                        // 对每一个单词到词向量模型中生成对应的词向量，需要再次遍历模型
+//                        for (String string : split2) {
+//                            int index = string1.indexOf(string); // 找到该单词在词向量模型中的下标
+//                            if(index != -1){
+//                                String lineVec = word2vecAll.get(index);
+//                                outfile.write(lineVec + "\n");
+//                            }
+//                        }
+//
+//                    }
+//                    outfile.close();//注意关闭，否则会有问题
+//                    // System.out.println(string1.size());
+//                    read1.close();
+//                    read2.close();
+//                } else {
+//                    System.out.println("找不到指定文件");
+//                }
+//            } catch (Exception e) {
+//                System.out.println("读取文件出错");
+//                e.printStackTrace();
+//            }
+//        }
         long end1 = System.currentTimeMillis();
         System.out.println("---词向量处理完毕，耗时1："+(end1-start1)/1000+"s");
     }

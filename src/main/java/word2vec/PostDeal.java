@@ -1,4 +1,4 @@
-package WordToVec;
+package word2vec;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -99,6 +99,94 @@ public class PostDeal {
 
     }
 
+    //处理多层文件夹，与deletWordandLines实际功能一致。
+    public static void deleteWordandLines(String sourceCatalog, String targetCatalog) throws Exception{
+        String sourcePaths = "";
+        String targetPaths = "";
+        String sourcePathss = "";
+        String targetPathss = "";
+        File of = new File(targetCatalog);
+        if (!of.exists()){
+            of.mkdir();
+        }
+        File files = new File(sourceCatalog);
+        File[] subFiles = files.listFiles();   //当前文件夹的所有文件，放到File数组里，然后下面是遍历每一个文件
+        for (int i = 0; i < subFiles.length; i++) {
+            String fileNames = subFiles[i].getName();
+            sourcePaths = sourceCatalog + "\\" + fileNames;
+            targetPaths = targetCatalog + "\\" + fileNames;
+            File oof = new File(targetPaths);
+            if (!oof.exists()){
+                oof.mkdir();
+            }
+            File filess = new File(sourcePaths);
+            File[] subFiless = filess.listFiles();
+            for (int j = 0; j < subFiless.length; j++){
+                String fileNamess = subFiless[j].getName();
+                sourcePathss = sourcePaths + "\\" + fileNamess;
+                targetPathss = targetPaths + "\\" + fileNamess;
+                File ooof = new File(targetPathss);
+                if (!ooof.exists()){
+                    ooof.mkdir();
+                }
+                File filesss = new File(sourcePathss);
+                File[] subFile= filesss.listFiles();
+                for (int k = 0; k < subFile.length; k++){
+                    String fileName = subFile[k].getName();
+                    try {
+                        BufferedReader br = new BufferedReader(new InputStreamReader
+                                (new FileInputStream(subFile[k].getAbsolutePath())));
+                        BufferedWriter bw = new BufferedWriter(new FileWriter
+                                (targetPathss+ "\\" + fileName));
+                        // 写自己的处理文本的程序，下面是读取文件的例子
+                        String input = "";
+                        while((input = br.readLine()) != null)
+                        {
+                            if(input.equals("")) continue;
+                            String string = input;
+                            string = string.substring(string.indexOf(" ")+1);
+                            bw.write(string);
+                            bw.newLine();
+                        }
+                        br.close();//一定要随时关闭
+                        bw.close();
+                    }
+                    catch (FileNotFoundException e) {
+                        System.out.println("文件找不到");
+                    }
+//        			System.out.println(fileName + " done");
+                }
+            }
+        }
+
+//
+//        for (int i = 0; i < subFile.length; i++) {
+//            String fileName = subFile[i].getName();
+//            try {
+//                BufferedReader br = new BufferedReader(new InputStreamReader
+//                        (new FileInputStream(subFile[i].getAbsolutePath())));
+//                BufferedWriter bw = new BufferedWriter(new FileWriter
+//                        (targetPath+ "\\" + fileName));
+//                // 写自己的处理文本的程序，下面是读取文件的例子
+//                String input = "";
+//                while((input = br.readLine()) != null)
+//                {
+//                    if(input.equals("")) continue;
+//                    String string = input;
+//                    string = string.substring(string.indexOf(" ")+1);
+//                    bw.write(string);
+//                    bw.newLine();
+//                }
+//                br.close();//一定要随时关闭
+//                bw.close();
+//            }
+//            catch (FileNotFoundException e) {
+//                System.out.println("文件找不到");
+//            }
+////			System.out.println(fileName + " done");
+//        }
+    }
+
     public static void main(String arg[]){
         String t = "Tree_traversal";
         String inputCatalog = "D:\\wiki_Data_labels\\DataStructure\\Data_structure_7\\"+t+"\\";
@@ -106,5 +194,6 @@ public class PostDeal {
         deleteLastline(inputCatalog, outputCatalog);
         System.out.println(t+"文件end & success!");
     }
+
 
 }
