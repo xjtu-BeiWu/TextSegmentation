@@ -2,7 +2,6 @@ package process;
 
 public class RecordBean {
     public RecordBean(){
-
     }
 
     private String facet1;

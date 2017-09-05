@@ -65,7 +65,7 @@ public class SimCos {
                 w2n = w2n + w2[i]*w2[i];
             }
             ws = ws/(Math.sqrt(w1n)+Math.sqrt(w2n));
-            System.out.println(ws);
+//            System.out.println(ws);
         }
         return ws;
     }
