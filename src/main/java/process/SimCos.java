@@ -1,34 +1,48 @@
-package Process;
+package process;
 
+
+import org.apache.commons.io.FileUtils;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by BellaWu on 2017/7/5.
  */
-public class SimCom {
+public class SimCos {
     public static void main(String[] args) {
         //test:
         String str1 = "0.3 0.2 0.4";
         String str2 = "0.1 0.1 0.1";
+        String encoding = "UTF-8";
 //        float[] a = str2ary(str1);
 //        for (int i = 0; i < a.length; i++) {
 //            System.out.println(a[i]);
 //        }
-//        double s = cos_sim(str1,str2);
-//        System.out.println(s);
-        String line1 = " ";
-        String line2 = " ";
-        double ls = line_sim(line1, line2);
-        System.out.println(ls);
+        double s = cos_sim(str1,str2);
+        System.out.println(s);
+//        String line1 = " ";
+//        String line2 = " ";
+//        double ls = line_sim(line1, line2);
+//        System.out.println(ls);
     }
 
     /*
     计算两段话的相似度（相关度），主要过程是通过计算各词之间词向量（以字符串形式输入）余弦相似度，通过算数平均的方法得到结果。
     参考论文：Unsupervised Text Segmentation Using Semantic Relatedness Graph
     */
-    public static double line_sim(String line1, String line2){
-        double ls = 0;
-
-        return ls;
+    public static double line_sim(String filepath1, String filepath2, String encoding) throws IOException {
+        double sr = 0;
+        List<String> lines1 = FileUtils.readLines(new File(filepath1), encoding);
+        List<String> lines2 = FileUtils.readLines(new File(filepath2), encoding);
+        for (int i = 0; i < lines1.size(); i++) {
+            for (int j = 0; j < lines2.size(); j++) {
+                sr = sr + cos_sim(lines1.get(i), lines2.get(j));
+            }
+        }
+        sr = (sr/lines1.size()+sr/lines2.size())/2;
+        return sr;
     }
 
 
